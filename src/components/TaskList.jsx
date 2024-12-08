@@ -1,11 +1,8 @@
-
 import axios from "axios";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function TaskList({ tasks, fetchTasks }) {
   const handleComplete = async (taskName) => {
-    await axios.post(`${BACKEND_URL}/tasks/complete`, {
+    await axios.post("http://127.0.0.1:5000/tasks/complete", {
       date: new Date().toISOString().split("T")[0],
       name: taskName,
     });

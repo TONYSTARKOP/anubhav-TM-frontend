@@ -1,4 +1,3 @@
-
 function TaskReport({ report }) {
   return (
     <div>

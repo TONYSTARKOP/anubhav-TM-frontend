@@ -1,36 +1,31 @@
-
 import { useState } from "react";
 import axios from "axios";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 function TaskInput({ fetchTasks }) {
   const [jsonInput, setJsonInput] = useState("");
+  const [error, setError] = useState("");  // Add an error state to show error messages
 
   const handleSubmit = async () => {
     try {
-      // Trim any extra whitespace or new lines
-      const trimmedInput = jsonInput.trim();
-      
-      // Parse the JSON string
-      const data = JSON.parse(trimmedInput);
-      
-      // Send the data to backend
+      const data = JSON.parse(jsonInput);  // Try to parse the JSON input
+
+      // Check if the structure is correct
+      if (!data.date || !data.tasks || !Array.isArray(data.tasks)) {
+        setError("Invalid structure: 'date' and 'tasks' are required.");
+        return;
+      }
+
+      // Send the JSON to the backend
       await axios.post("http://127.0.0.1:5000/tasks", data);
-      
-      // Refresh tasks after successful addition
       fetchTasks();
-      
-      // Reset the input field
-      setJsonInput("");
-      
+      setJsonInput("");  // Clear the input
+      setError("");  // Clear any previous error
       alert("Tasks added successfully!");
     } catch (error) {
-      console.error("Error parsing JSON:", error);
-      alert("Invalid JSON format. Please check your input.");
+      setError("Invalid JSON format. Please check your input.");
+      console.error(error);
     }
   };
-  
 
   return (
     <div>
@@ -50,6 +45,7 @@ function TaskInput({ fetchTasks }) {
 }`}
       />
       <button onClick={handleSubmit}>Submit Tasks</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}  {/* Display error message */}
     </div>
   );
 }

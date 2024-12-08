@@ -12,9 +12,15 @@ function App() {
 
   // Fetch today's tasks
   const fetchTasks = async () => {
-    const response = await axios.get(`${BACKEND_URL}/tasks`);
-    setTasks(response.data);
+    try {
+      const response = await axios.get("https://anubhav-tm-backend-1.onrender.com/tasks");
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      alert("There was an error fetching tasks. Please try again later.");
+    }
   };
+  
 
   // Fetch daily report
   const fetchReport = async () => {

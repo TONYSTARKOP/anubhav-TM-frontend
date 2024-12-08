@@ -1,8 +1,11 @@
+
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TaskInput from "./components/taskinput";
-import TaskList from "./components/tasklist";
-import TaskReport from "./components/taskreport";
+import TaskInput from "../components/TaskInput";
+import TaskList from "../components/tasklist";
+import TaskReport from "../components/TaskReport";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -10,13 +13,13 @@ function App() {
 
   // Fetch today's tasks
   const fetchTasks = async () => {
-    const response = await axios.get("http://127.0.0.1:5000/tasks");
+    const response = await axios.get(`${BACKEND_URL}/tasks`);
     setTasks(response.data);
   };
 
   // Fetch daily report
   const fetchReport = async () => {
-    const response = await axios.get("http://127.0.0.1:5000/report");
+    const response = await axios.get(`${BACKEND_URL}/report`);
     setReport(response.data.incomplete);
   };
 

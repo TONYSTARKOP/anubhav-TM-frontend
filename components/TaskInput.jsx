@@ -1,5 +1,8 @@
+
 import { useState } from "react";
 import axios from "axios";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function TaskInput({ fetchTasks }) {
   const [jsonInput, setJsonInput] = useState("");
@@ -7,7 +10,7 @@ function TaskInput({ fetchTasks }) {
   const handleSubmit = async () => {
     try {
       const data = JSON.parse(jsonInput);
-      await axios.post("http://127.0.0.1:5000/tasks", data);
+      await axios.post(`${BACKEND_URL}/tasks`, data);
       fetchTasks();
       setJsonInput("");
       alert("Tasks added successfully!");

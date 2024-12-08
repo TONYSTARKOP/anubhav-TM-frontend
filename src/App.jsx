@@ -1,9 +1,8 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TaskInput from "../components/TaskInput";
-import TaskList from "../components/tasklist";
-import TaskReport from "../components/TaskReport";
+import TaskInput from "./components/TaskInput";
+import TaskList from "./components/TaskList";
+import TaskReport from "./components/TaskReport";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

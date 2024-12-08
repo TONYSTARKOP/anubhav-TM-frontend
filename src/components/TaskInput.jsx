@@ -9,15 +9,28 @@ function TaskInput({ fetchTasks }) {
 
   const handleSubmit = async () => {
     try {
-      const data = JSON.parse(jsonInput);
-      await axios.post(`${BACKEND_URL}/tasks`, data);
+      // Trim any extra whitespace or new lines
+      const trimmedInput = jsonInput.trim();
+      
+      // Parse the JSON string
+      const data = JSON.parse(trimmedInput);
+      
+      // Send the data to backend
+      await axios.post("http://127.0.0.1:5000/tasks", data);
+      
+      // Refresh tasks after successful addition
       fetchTasks();
+      
+      // Reset the input field
       setJsonInput("");
+      
       alert("Tasks added successfully!");
     } catch (error) {
-      alert("Invalid JSON format");
+      console.error("Error parsing JSON:", error);
+      alert("Invalid JSON format. Please check your input.");
     }
   };
+  
 
   return (
     <div>
